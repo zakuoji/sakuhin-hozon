@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use App\Post; //Postモデルのインポート
 
-class UserController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,9 +14,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return view('users.index',['users' => $users]);
-        //
+        //一覧表示
+        $posts = Post::latest()->get();
+
+        return view('posts.index',['posts' => $posts]);
     }
 
     /**
@@ -24,11 +25,10 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    //追加用のフォーム画面へ
     public function create()
     {
+        return view('posts.create');
         //
-        return view('users.create');
     }
 
     /**
@@ -37,18 +37,14 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    //追加処理
-    //終わったら、作った後のユーザーページへ
     public function store(Request $request)
     {
-        $user = new User;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->save();
-        return redirect('users/'.$user->id);
+        $post = new Post;
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->save();
+        return redirect('posts/'.$post->id);
         //
-
     }
 
     /**
@@ -57,10 +53,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Post $post)
     {
         //
-        return view('users.show', ['user' => $user]);
+        return view('posts.show', ['post' => $post]);
     }
 
     /**
@@ -69,10 +65,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(User $user)
+    public function edit(Post $post)
     {
-        return view('users.edit',['user' => $user]);
-        //1件を更新
+        //
+        return view('posts.edit', ['post' => $post]);
     }
 
     /**
@@ -82,14 +78,13 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, Post $post)
     {
-        $user->name = $request->name; 
-        $user->email = $request->email; 
-        $user->password = $request->password; 
-        $user->save();
-        return redirect('users/'.$user->id);
         //
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->save();
+        return redirect('posts/' . $post->id);
     }
 
     /**
@@ -98,10 +93,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function destroy(Post $post)
     {
-        $user->delete();
-        return redirect('users');
-        //モデル削除(1件)
+        //
+        $post->delete();
+        return redirect('posts');
     }
 }

@@ -22,3 +22,4 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('new/new2', 'newController@new2');
 
 Route::resource('users', 'UserController');
+Route::resource('posts', 'PostController');
