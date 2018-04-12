@@ -1,0 +1,25 @@
+ Illuminate\Database\QueryException  : SQLSTATE[42S01]: Base table or view already exists: 1050 Table 
+ 'users' already exists (SQL: create table `users` (`id` int unsigned not null auto_increment primary key, 
+ `name` varchar(191) not null, `email` varchar(255) not null, `password` varchar(191) not null, 
+ `lang` varchar(191) not null default 'en', `timezone` varchar(191) not null default 'UTC', 
+ `remember_token` varchar(100) null, `created_at` timestamp null,
+  `updated_at` timestamp null) default character set utf8mb4 collate utf8mb4_unicode_ci)
+
+  at C:\Users\ryodozkpr\vagrant\newApp\vendor\laravel\framework\src\Illuminate\Database\Connection.php:664
+    660|         // If an exception occurs when attempting to run a query, we'll format the error
+    661|         // message to include the bindings with SQL, which will make this exception a
+    662|         // lot more helpful to the developer instead of just the database's errors.
+    663|         catch (Exception $e) {
+  > 664|             throw new QueryException(
+    665|                 $query, $this->prepareBindings($bindings), $e
+    666|             );
+    667|         }
+    668|
+
+  Exception trace:
+
+  1   PDOException::("SQLSTATE[42S01]: Base table or view already exists: 1050 Table 'users' already exists")
+      C:\Users\ryodozkpr\vagrant\newApp\vendor\laravel\framework\src\Illuminate\Database\Connection.php:458
+
+  2   PDOStatement::execute()
+      C:\Users\ryodozkpr\vagrant\newApp\vendor\laravel\framework\src\Illuminate\Database\Connection.php:458
